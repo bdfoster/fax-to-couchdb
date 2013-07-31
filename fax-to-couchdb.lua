@@ -25,12 +25,14 @@ tmp_filepath = "/usr/local/freeswitch/storage/fax"
 --Set the doc id
 local doc_id = timestamp.."-"..caller_id_name;
 
+--Set the database
+database = "fax";
 --Convert .tif to .pdf
 fax_pdf_filename = timestamp.."-"..caller_id_name..".pdf";
 pdf_conversion = os.execute("tiff2pdf -o "..tmp_filepath.."/"..fax_pdf_filename.." "..fax_tiff_filename);
 
 --Build a new document object
-local doc = luchia.document:new("fax", server_params);
+local doc = luchia.document:new(database, server_params);
 local contents = {
 	Received = full_timestamp,
 	From = caller_id_name.." <"..caller_id_number..">",
