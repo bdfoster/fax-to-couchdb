@@ -16,7 +16,8 @@ How to use
 4. Create your fax extension (if you haven't already done so):
  - This is what mine looks like:
 
-`<include>
+<code>
+<include>
   <extension name="faxrx">
     <condition field="destination_number" expression="^faxrx$|^/*11$|^3000$">
       <action application="set" data="fax_enable_t38=true"/>
@@ -26,12 +27,12 @@ How to use
       <action application="rxfax" data="$${base_dir}/storage/fax/FAX-${uuid}.tif"/>
     </condition>
   </extension>
-</include>`
+</include>
+</code>
 
 5. Just before the answer application in our extension, we're going to insert this line:
 
-      `<action application="set" data="execute_on_fax_result=lua $${base_dir}/lua/fax-to-couchdb/fax-to-couchdb.lua \\\${fax_filename} ${caller_id_name} ${caller_id_number} ${destination_number} \\\${fax_document_transferred_pages} \\\${fax_result_code} \\\${fax_result_text} \\\${fax_transfer_rate} \\\${fax_ecm_used} \\\${fax_bad_rows} ${uuid}"/>`
-
+      <code><action application="set" data="execute_on_fax_result=lua $${base_dir}/lua/fax-to-couchdb/fax-to-couchdb.lua \\\${fax_filename} ${caller_id_name} ${caller_id_number} ${destination_number} \\\${fax_document_transferred_pages} \\\${fax_result_code} \\\${fax_result_text} \\\${fax_transfer_rate} \\\${fax_ecm_used} \\\${fax_bad_rows} ${uuid}"/></code>
 I know, it's long. We're passing variables to the script using this so that we can store these in the database.
 
 6. Test, test, test. Should work just fine. If not, open up an issue on Github (http://github.com/bdfoster/fax-to-couchdb/issues).
