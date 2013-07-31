@@ -1,9 +1,7 @@
 --Fax processing for Freeswitch to  CouchDB on successful fax receipt
 
 --Load Configuration
-config_file = "config.lua";
-pwd = os.execute("pwd");
-require pwd.."/"..config_file;
+dofile("/usr/local/freeswitch/scripts/lua/fax-to-couchdb/config.lua");
 
 --Load Required Modules
 require "luchia";
